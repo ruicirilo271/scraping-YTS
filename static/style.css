@@ -106,4 +106,16 @@ h1 {
 .magnet-link:hover {
     background-color: #1e6091;
 }
+.movie p {
+    margin: 4px 0;
+    font-size: 14px;
+    color: #444;
+}
+
+.summary {
+    font-style: italic;
+    font-size: 13px;
+    margin-top: 8px;
+    color: #555;
+}
 

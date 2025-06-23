@@ -35,22 +35,36 @@
         {% endif %}
 
         <div class="movies">
-            {% for movie in movies %}
-                <div class="movie">
-                    {% if movie.img %}
-                        <img src="{{ movie.img }}" alt="Poster" />
-                    {% endif %}
-                      <h3>{{ movie.title }} {% if movie.year %}({{ movie.year }}){% endif %}</h3>
+    {% for movie in movies %}
+        <div class="movie">
+            {% if movie.img %}
+                <img src="{{ movie.img }}" alt="Poster" />
+            {% endif %}
 
-                    {% for t in movie.torrents %}
-                        <div class="torrent">
-                            <strong>{{ t.quality }}</strong> - {{ t.size }} - {{ t.seeders }} seeders<br />
-                            <a href="{{ t.magnet }}" class="magnet-link" target="_blank" rel="noopener noreferrer">Baixar Magnet</a>
-                        </div>
-                    {% endfor %}
+            <h3>{{ movie.title }} {% if movie.year %}({{ movie.year }}){% endif %}</h3>
+
+            {% if movie.rating %}
+                <p>⭐ <strong>{{ movie.rating }}</strong></p>
+            {% endif %}
+
+            {% if movie.runtime %}
+                <p>⏱️ {{ movie.runtime }} min</p>
+            {% endif %}
+
+            {% if movie.summary %}
+                <p class="summary">{{ movie.summary }}</p>
+            {% endif %}
+
+            {% for t in movie.torrents %}
+                <div class="torrent">
+                    <strong>{{ t.quality }}</strong> - {{ t.size }} - {{ t.seeders }} seeders<br />
+                    <a href="{{ t.magnet }}" class="magnet-link" target="_blank" rel="noopener noreferrer">Baixar Magnet</a>
                 </div>
             {% endfor %}
         </div>
+    {% endfor %}
+</div>
+
     </div>
 
     <script>
