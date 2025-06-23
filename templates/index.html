@@ -40,7 +40,8 @@
                     {% if movie.img %}
                         <img src="{{ movie.img }}" alt="Poster" />
                     {% endif %}
-                    <h3>{{ movie.title }}</h3>
+                      <h3>{{ movie.title }} {% if movie.year %}({{ movie.year }}){% endif %}</h3>
+
                     {% for t in movie.torrents %}
                         <div class="torrent">
                             <strong>{{ t.quality }}</strong> - {{ t.size }} - {{ t.seeders }} seeders<br />
