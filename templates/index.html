@@ -22,8 +22,7 @@
             <input type="text" name="query" value="{{ query }}" placeholder="Ex: Spider-Man" required />
             <select name="site">
                 <option value="yts" {% if site == 'yts' %}selected{% endif %}>YTS</option>
-                <option value="1337" {% if site == '1337' %}selected{% endif %}>1337x</option>
-                <option value="rarbg" {% if site == 'rarbg' %}selected{% endif %}>RARBG</option>
+               
                 <option value="thepiratebay" {% if site == 'thepiratebay' %}selected{% endif %}>Pirate Bay</option>
             </select>
             <button type="submit">🔍 Buscar</button>
