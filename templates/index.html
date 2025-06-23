@@ -1,67 +1,43 @@
 <!DOCTYPE html>
 <html lang="pt">
 <head>
-    <meta charset="UTF-8">
-    <title>Pesquisa de Filmes</title>
-    <!-- Bootstrap 5 CDN -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <meta charset="UTF-8" />
+    <title>🎬 Busca de Torrents</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}" />
 </head>
-<body class="bg-dark text-light">
-
-<div class="container py-5">
-    <h1 class="mb-4 text-center">Pesquisar Filmes</h1>
-
-    <!-- Formulário de pesquisa -->
-    <form method="POST" class="mb-5">
-        <div class="input-group mb-3">
-            <input type="text" name="query" class="form-control" placeholder="Digite o nome do filme..." required>
-            <select name="site" class="form-select" style="max-width: 200px;">
-                {% for site in sites %}
-                    <option value="{{ site }}" {% if site == selected_site %}selected{% endif %}>{{ site }}</option>
-                {% endfor %}
+<body>
+    <div class="container">
+        <h1>🎬 Busca de Filmes Torrent</h1>
+        <form method="POST" class="search-form">
+            <input type="text" name="query" value="{{ query }}" placeholder="Ex: Spider-Man" required />
+            <select name="site">
+                <option value="yts" {% if site == 'yts' %}selected{% endif %}>YTS</option>
+                
+                <option value="thepiratebay" {% if site == 'thepiratebay' %}selected{% endif %}>Pirate Bay</option>
             </select>
-            <button type="submit" class="btn btn-primary">Pesquisar</button>
-        </div>
-    </form>
+            <button type="submit">🔍 Buscar</button>
+        </form>
 
-    {% if results %}
-        <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
-            {% for result in results %}
-                <div class="col">
-                    <div class="card h-100 bg-secondary text-white shadow">
-                        {% if result.img %}
-                            <img src="https://trnt.librey.org/proxy/image_proxy.php?url={{ result.img }}" class="card-img-top" alt="{{ result.title }}">
-                        {% else %}
-                            <img src="https://via.placeholder.com/300x450?text=Sem+Capa" class="card-img-top" alt="Sem capa">
-                        {% endif %}
-                        <div class="card-body">
-                            <h5 class="card-title">{{ result.title }} ({{ result.year }})</h5>
-                            <p class="card-text">{{ result.summary }}</p>
-                            <p class="mb-1"><strong>Rating:</strong> {{ result.rating }} ⭐</p>
-                            {% if result.trailer %}
-                                <a href="https://www.youtube.com/watch?v={{ result.trailer }}" target="_blank" class="btn btn-sm btn-light mb-2">🎬 Ver Trailer</a>
-                            {% endif %}
-                            <div>
-                                <strong>Torrents:</strong>
-                                <ul class="list-unstyled mt-2">
-                                    {% for torrent in result.torrents %}
-                                        <li>
-                                            <a href="{{ torrent.magnet }}" class="btn btn-sm btn-outline-light mb-1" target="_blank">
-                                                {{ torrent.quality or 'Qualidade?' }} | {{ torrent.size or '?' }} | 🧲 Seeders: {{ torrent.seeders or '?' }}
-                                            </a>
-                                        </li>
-                                    {% endfor %}
-                                </ul>
-                            </div>
+        {% if error %}
+            <p class="error">{{ error }}</p>
+        {% endif %}
+
+        <div class="movies">
+            {% for movie in movies %}
+                <div class="movie">
+                    {% if movie.img %}
+                        <img src="{{ movie.img }}" alt="Poster" />
+                    {% endif %}
+                    <h3>{{ movie.title }}</h3>
+                    {% for t in movie.torrents %}
+                        <div class="torrent">
+                            <strong>{{ t.quality }}</strong> - {{ t.size }} - {{ t.seeders }} seeders<br />
+                            <a href="{{ t.magnet }}" class="magnet-link" target="_blank" rel="noopener noreferrer">Baixar Magnet</a>
                         </div>
-                    </div>
+                    {% endfor %}
                 </div>
             {% endfor %}
         </div>
-    {% endif %}
-</div>
-
-<!-- Bootstrap JS (opcional) -->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    </div>
 </body>
 </html>
