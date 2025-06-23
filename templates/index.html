@@ -4,19 +4,32 @@
     <meta charset="UTF-8" />
     <title>🎬 Busca de Torrents</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}" />
+    <style>
+        /* Estilo para a mensagem de carregamento */
+        #loadingMessage {
+            display: none;
+            text-align: center;
+            font-weight: bold;
+            margin-bottom: 20px;
+            color: #2980b9;
+        }
+    </style>
 </head>
 <body>
     <div class="container">
         <h1>🎬 Busca de Filmes Torrent</h1>
-        <form method="POST" class="search-form">
+        <form method="POST" class="search-form" id="searchForm">
             <input type="text" name="query" value="{{ query }}" placeholder="Ex: Spider-Man" required />
             <select name="site">
                 <option value="yts" {% if site == 'yts' %}selected{% endif %}>YTS</option>
-                
+                <option value="1337" {% if site == '1337' %}selected{% endif %}>1337x</option>
+                <option value="rarbg" {% if site == 'rarbg' %}selected{% endif %}>RARBG</option>
                 <option value="thepiratebay" {% if site == 'thepiratebay' %}selected{% endif %}>Pirate Bay</option>
             </select>
             <button type="submit">🔍 Buscar</button>
         </form>
+
+        <div id="loadingMessage">Carregando Torrents...</div>
 
         {% if error %}
             <p class="error">{{ error }}</p>
@@ -39,5 +52,15 @@
             {% endfor %}
         </div>
     </div>
+
+    <script>
+        const form = document.getElementById('searchForm');
+        const loadingMsg = document.getElementById('loadingMessage');
+
+        form.addEventListener('submit', () => {
+            loadingMsg.style.display = 'block';
+        });
+    </script>
 </body>
 </html>
+
