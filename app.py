@@ -2,7 +2,7 @@ from flask import Flask, render_template, request
 import requests
 
 app = Flask(__name__)
-API_URL = "https://trnt.librey.org/api.php"
+API_URL = "https://trnt.sarthak.co.in/api.php"
 
 @app.route("/", methods=["GET", "POST"])
 def index():
